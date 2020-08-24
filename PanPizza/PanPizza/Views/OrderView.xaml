@@ -28,6 +28,12 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="6"/>
             <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="6"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="6"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="6"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -45,9 +51,15 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="6"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <ComboBox Grid.Column="1" Grid.Row="3" Name="cmbSize" Height="20" Width="150" DisplayMemberPath="Name" IsEditable="True" Text="Choose size"
+        <ComboBox Grid.Column="1" Grid.Row="3" Name="cmbSize" Height="20" Width="150" DisplayMemberPath="Name" IsEnabled="True" Text="Choose size"
                   ItemsSource="{Binding SizeList, UpdateSourceTrigger=PropertyChanged}"                 
                   SelectedItem="{Binding SelectedSize, UpdateSourceTrigger=PropertyChanged}"
                   SelectionChanged="cmbSize_SelectionChanged"
@@ -71,13 +83,21 @@
                 </DataGridTemplateColumn>               
             </DataGrid.Columns>
         </DataGrid>
-        <Label Grid.Column="3" Grid.Row="15"  Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}"  Grid.ColumnSpan="15" Name="lblTotalAmount" Content="{Binding TotalAmount}" Padding="0" Margin="30,0,0,0" HorizontalAlignment="Left"/>
-        <Label Grid.Column="3" Grid.Row="15"  Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}"  Grid.ColumnSpan="15" Name="lblTotal" Content="Total: " Padding="0" HorizontalAlignment="Left"/>
-        <Label Grid.Column="3" Grid.Row="15"  Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}"  Grid.ColumnSpan="15" Name="lblAmount" Content=".din" Padding="0" Margin="80,0,0,0" HorizontalAlignment="Left"/>
-        <Button Grid.Column="1" Grid.Row="15" Name="btnCalculate" Content="Calculate amount" IsEnabled="False" Height="20" 
+        <Label Grid.Column="3" Grid.Row="13"  Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}"  Grid.ColumnSpan="15" Name="lblTotalAmount" Content="{Binding TotalAmount}" Padding="0" Margin="30,0,0,0" HorizontalAlignment="Left"/>
+        <Label Grid.Column="3" Grid.Row="13"  Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}"  Grid.ColumnSpan="15" Name="lblTotal" Content="Total: " Padding="0" HorizontalAlignment="Left"/>
+        <Label Grid.Column="3" Grid.Row="13"  Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}"  Grid.ColumnSpan="15" Name="lblAmount" Content=".din" Padding="0" Margin="80,0,0,0" HorizontalAlignment="Left"/>
+        <Button Grid.Column="1" Grid.Row="13" Name="btnCalculate" Content="Calculate amount" IsEnabled="False" Height="20" 
                 Width="120" HorizontalAlignment="Left"                
                 Command="{Binding CalculateAmount, UpdateSourceTrigger=PropertyChanged}"
                  Click="btnCalculate_Click"
+                />
+        <Label Grid.Column="5" Grid.Row="15" Grid.RowSpan="6" Grid.ColumnSpan="5" Name="lblValidationPhoneNUmber"  Padding="0" HorizontalAlignment="Right"/>
+        <TextBox Grid.Column="3" Grid.Row="15" Name="txtPhoneNumber" Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}" Height="20" Width="150"                
+                TextChanged="txtPhoneNumber_TextChanged"
+                 />
+        <Button Grid.Column="1" Grid.Row="15" Name="btnSendSms" Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}" Content="Send SMS" IsEnabled="False" Height="20" 
+                Width="120" HorizontalAlignment="Left"                
+                Click="btnSendSms_Click"
                 />
         <Button Grid.Column="9" Grid.Row="1" Name="btnBack" Content="Back to main window" IsEnabled="True" Height="20" Grid.ColumnSpan="3"
                 Width="180" HorizontalAlignment="Right" 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +24,7 @@ namespace PanPizza.Views
     {
         private bool isValidSize;
         private bool isValidChecked;
+        private bool isValidNumber;
         OrderViewModel orderViewModel;
 
         public OrderView()
@@ -42,6 +44,18 @@ namespace PanPizza.Views
             else
             {
                 btnCalculate.IsEnabled = false;
+            }
+        }
+
+        private void IsSendSMSEnabled()
+        {
+            if (isValidNumber)
+            {
+                btnSendSms.IsEnabled = true;
+            }
+            else
+            {
+                btnSendSms.IsEnabled = false;
             }
         }
 
@@ -83,7 +97,7 @@ namespace PanPizza.Views
             if (orderViewModel.TotalAmount > 0)
             {
                 DataGridResults.IsEnabled = false;
-                cmbSize.IsEditable = false;
+                cmbSize.IsEnabled = false;
                 isValidSize = false;
                 isValidChecked = false;
             }
@@ -100,6 +114,41 @@ namespace PanPizza.Views
             MainWindow mainView = new MainWindow();
             mainView.Show();
             Close();
+        }
+
+        private void btnSendSms_Click(object sender, RoutedEventArgs e)
+        {
+            long phoneNumber = long.Parse(txtPhoneNumber.Text);
+            orderViewModel.SendMessage(phoneNumber);
+        }
+
+        private void txtPhoneNumber_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtPhoneNumber.Focus())
+            {
+                lblValidationPhoneNUmber.Visibility = Visibility.Visible;
+                lblValidationPhoneNUmber.FontSize = 16;
+                lblValidationPhoneNUmber.Foreground = new SolidColorBrush(Colors.Red);
+                lblValidationPhoneNUmber.Content = "Phone number must be in \nformat 3816xxxxxxx!";
+            }
+
+            string patternPhoneNumber = @"^([3816]{4}[0-9]{7,9})$";
+            Match match = Regex.Match(txtPhoneNumber.Text, patternPhoneNumber, RegexOptions.IgnoreCase);
+
+            if (!match.Success)
+            {
+                txtPhoneNumber.BorderBrush = new SolidColorBrush(Colors.Red);
+                txtPhoneNumber.Foreground = new SolidColorBrush(Colors.Red);
+                isValidNumber = false;
+            }
+            else
+            {
+                lblValidationPhoneNUmber.Visibility = Visibility.Hidden;
+                txtPhoneNumber.BorderBrush = new SolidColorBrush(Colors.Black);
+                txtPhoneNumber.Foreground = new SolidColorBrush(Colors.Black);
+                isValidNumber = true;
+            }
+            IsSendSMSEnabled();
         }
     }
 }

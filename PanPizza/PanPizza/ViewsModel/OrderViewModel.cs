@@ -10,6 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using TextmagicRest;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace PanPizza.ViewsModel
 {
@@ -133,7 +136,25 @@ namespace PanPizza.ViewsModel
             }
         }
 
+        public void SendMessage(long phoneNumber)
+        {
+            const string accountSid = "ACb863539e24ef069fbdc2c165da618146";
+            const string authToken = "9476fa69da35edb85d93022416b369df";
 
+            try
+            {
+                TwilioClient.Init(accountSid, authToken);
+                var message = MessageResource.Create(
+                    body: "Your PanPizza is ready! You can come for your order.",
+                    from: new Twilio.Types.PhoneNumber("+17272611706"),
+                    to: new Twilio.Types.PhoneNumber(string.Format("+{0}", phoneNumber)));
+                Console.WriteLine(message.Sid);
+            }          
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
 
         #endregion
     }

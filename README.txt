@@ -1,3 +1,6 @@
+Za rad sa DB kreirane su Store procedure koje je potrebno implementirati nakon kreiranja DB i tabela. Store procedure se nalaze u 
+Marija_Bozic_Dan_55\PanPizza\PanPizza\SQl_design\StoreProcedure.sql
+
 Implementirano je slanje sms pomocu:
 https://www.twilio.com/try-twilio
 

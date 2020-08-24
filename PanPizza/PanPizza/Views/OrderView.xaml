@@ -4,8 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PanPizza.Views"
+        xmlns:converters="clr-namespace:PanPizza.Converters"
         mc:Ignorable="d"
         Title="OrderView" Height="450" Width="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <converters:AmountToVisibilityConverter x:Key="AmountToVisibilityConverter" />            
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -33,13 +39,33 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <ComboBox Grid.Column="1" Grid.Row="7" Name="cmbSize" Height="20" Width="150" DisplayMemberPath="Name" IsEditable="True" Text="Choose size"
+        <ComboBox Grid.Column="1" Grid.Row="3" Name="cmbSize" Height="20" Width="150" DisplayMemberPath="Name" IsEditable="True" Text="Choose size"
                   ItemsSource="{Binding SizeList, UpdateSourceTrigger=PropertyChanged}"                 
                   SelectedItem="{Binding SelectedSize, UpdateSourceTrigger=PropertyChanged}"
-                 />
-
-        <Button Grid.Column="3" Grid.Row="13" Name="btnSaveDoctor" Content="Calculate amount" IsEnabled="False" Height="20" 
-                Width="70" HorizontalAlignment="Left" Command="{Binding CalculateOrder, UpdateSourceTrigger=PropertyChanged}"
+                 SelectionChanged="cmbSize_SelectionChanged"
+                  />
+        <DataGrid Grid.Column="3" Grid.Row="3" Grid.RowSpan="10" Name="DataGridResults" ItemsSource="{Binding IngredientsList, UpdateSourceTrigger=PropertyChanged}"
+                      IsReadOnly="True" HeadersVisibility="Column" IsEnabled="True"
+                      AutoGenerateColumns="False" HorizontalGridLinesBrush="Black" BorderBrush="Black" Foreground="Black" FontWeight="Bold" Grid.ColumnSpan="7">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="FullName " Binding="{Binding Name}" Width="100"/>               
+                <DataGridTemplateColumn Header="Choose" Width="60" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Width="150" Orientation="Horizontal">
+                                <CheckBox Grid.Column="13" Grid.Row="3" Name="cxbChoosenIngridienc" Height="20" Width="100"                
+                                          IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>               
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Grid.Column="3" Grid.Row="15"  Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}"  Grid.ColumnSpan="15" Name="lblTotalAmount" Content="{Binding TotalAmount}" Padding="0" HorizontalAlignment="Right"/>
+        <Label Grid.Column="3" Grid.Row="15"  Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}"  Grid.ColumnSpan="15" Name="lblTotal" Content="Total: " Padding="0" HorizontalAlignment="Left"/>
+        <Button Grid.Column="1" Grid.Row="15" Name="btnCalculate" Content="Calculate amount" IsEnabled="True" Height="20" 
+                Width="120" HorizontalAlignment="Left" 
+                Command="{Binding CalculateAmount, UpdateSourceTrigger=PropertyChanged}"
                 />
     </Grid>
 </Window>

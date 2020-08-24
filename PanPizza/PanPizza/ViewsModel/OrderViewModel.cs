@@ -1,4 +1,5 @@
-﻿using PanPizza.Models;
+﻿using PanPizza.Command;
+using PanPizza.Models;
 using PanPizza.Service;
 using PanPizza.Views;
 using System;
@@ -7,6 +8,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace PanPizza.ViewsModel
 {
@@ -53,6 +56,34 @@ namespace PanPizza.ViewsModel
             }
         }
 
+        private Ingredients ingredients;
+        public Ingredients Ingredients
+        {
+            get
+            {
+                return ingredients;
+            }
+            set
+            {
+                ingredients = value;
+                OnPropertyChanged("Ingredients");
+            }
+        }
+
+        private double totalAmount;
+        public double TotalAmount
+        {
+            get
+            {
+                return totalAmount;
+            }
+            set
+            {
+                totalAmount = value;
+                OnPropertyChanged("TotalAmount");
+            }
+        }
+
         private ObservableCollection<Ingredients> ingredientsList;
         public ObservableCollection<Ingredients> IngredientsList
         {
@@ -66,6 +97,44 @@ namespace PanPizza.ViewsModel
                 OnPropertyChanged("IngredientsList");
             }
         }
+        #endregion        
+
+        #region Commands
+        private ICommand calculateAmount;
+
+        public ICommand CalculateAmount
+        {
+            get
+            {
+                if (calculateAmount == null)
+                {
+                    calculateAmount = new RelayCommand(param => CalculateAmountSaveExecute());
+                }
+                return calculateAmount;
+            }
+        }
+        public void CalculateAmountSaveExecute()
+        {
+            try
+            {
+                TotalAmount = 0;
+                foreach (Ingredients ingredients in IngredientsList)
+                {
+                    if(ingredients.IsChecked)
+                    {
+                        TotalAmount += ingredients.Price;
+                    }
+                }
+                TotalAmount = TotalAmount * selectedSize.SizeID;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());              
+            }
+        }
+
+
+
         #endregion
     }
 }

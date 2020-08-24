@@ -25,5 +25,10 @@ namespace PanPizza.Views
             InitializeComponent();
             this.DataContext = new OrderViewModel(this);
         }
+
+        private void cmbSize_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

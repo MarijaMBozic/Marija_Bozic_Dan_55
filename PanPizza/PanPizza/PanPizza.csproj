@@ -56,6 +56,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\RelayCommand.cs" />
+    <Compile Include="Converters\AmountToVisibilityConverter.cs" />
     <Compile Include="Helpers\ConnectionHelper.cs" />
     <Compile Include="Service\ServiceCode.cs" />
     <Compile Include="ViewsModel\ViewModelBase.cs" />

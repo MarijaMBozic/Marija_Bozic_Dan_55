@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PanPizza.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,13 @@ namespace PanPizza
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnAddOrder_Click(object sender, RoutedEventArgs e)
+        {
+            OrderView orderView = new OrderView();
+            orderView.Show();
+            Close();
         }
     }
 }

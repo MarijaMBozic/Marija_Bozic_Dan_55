@@ -20,6 +20,14 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="6"/>
             <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="6"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="6"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="6"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="6"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -42,7 +50,7 @@
         <ComboBox Grid.Column="1" Grid.Row="3" Name="cmbSize" Height="20" Width="150" DisplayMemberPath="Name" IsEditable="True" Text="Choose size"
                   ItemsSource="{Binding SizeList, UpdateSourceTrigger=PropertyChanged}"                 
                   SelectedItem="{Binding SelectedSize, UpdateSourceTrigger=PropertyChanged}"
-                 SelectionChanged="cmbSize_SelectionChanged"
+                  SelectionChanged="cmbSize_SelectionChanged"
                   />
         <DataGrid Grid.Column="3" Grid.Row="3" Grid.RowSpan="10" Name="DataGridResults" ItemsSource="{Binding IngredientsList, UpdateSourceTrigger=PropertyChanged}"
                       IsReadOnly="True" HeadersVisibility="Column" IsEnabled="True"
@@ -54,18 +62,26 @@
                         <DataTemplate>
                             <StackPanel Width="150" Orientation="Horizontal">
                                 <CheckBox Grid.Column="13" Grid.Row="3" Name="cxbChoosenIngridienc" Height="20" Width="100"                
-                                          IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}"/>
+                                          IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                                          Checked="cxbChoosenIngridienc_Checked"
+                                          />
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>               
             </DataGrid.Columns>
         </DataGrid>
-        <Label Grid.Column="3" Grid.Row="15"  Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}"  Grid.ColumnSpan="15" Name="lblTotalAmount" Content="{Binding TotalAmount}" Padding="0" HorizontalAlignment="Right"/>
+        <Label Grid.Column="3" Grid.Row="15"  Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}"  Grid.ColumnSpan="15" Name="lblTotalAmount" Content="{Binding TotalAmount}" Padding="0" Margin="30,0,0,0" HorizontalAlignment="Left"/>
         <Label Grid.Column="3" Grid.Row="15"  Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}"  Grid.ColumnSpan="15" Name="lblTotal" Content="Total: " Padding="0" HorizontalAlignment="Left"/>
-        <Button Grid.Column="1" Grid.Row="15" Name="btnCalculate" Content="Calculate amount" IsEnabled="True" Height="20" 
-                Width="120" HorizontalAlignment="Left" 
+        <Label Grid.Column="3" Grid.Row="15"  Visibility="{Binding TotalAmount, Converter={StaticResource AmountToVisibilityConverter}}"  Grid.ColumnSpan="15" Name="lblAmount" Content=".din" Padding="0" Margin="80,0,0,0" HorizontalAlignment="Left"/>
+        <Button Grid.Column="1" Grid.Row="15" Name="btnCalculate" Content="Calculate amount" IsEnabled="False" Height="20" 
+                Width="120" HorizontalAlignment="Left"                
                 Command="{Binding CalculateAmount, UpdateSourceTrigger=PropertyChanged}"
+                 Click="btnCalculate_Click"
+                />
+        <Button Grid.Column="9" Grid.Row="1" Name="btnBack" Content="Back to main window" IsEnabled="True" Height="20" Grid.ColumnSpan="3"
+                Width="180" HorizontalAlignment="Right" 
+                Click="btnBack_Click"
                 />
     </Grid>
 </Window>

@@ -15,7 +15,7 @@ Name nvarchar(100) not null
 create table tblIngredients(
 IngredientsId int identity(1,1) primary key,
 Name nvarchar(100) not null,
-Price nvarchar(100) not null
+Price money not null
 )
 
 create table tblOrder (
@@ -43,3 +43,15 @@ Values('Salami', 100),
 	('Origano', 50),
 	('Susam', 60),
 	('Sir', 90)
+
+
+CREATE PROCEDURE Get_AllSize
+AS
+	select SizeID, Name  from tblSize
+GO
+
+CREATE PROCEDURE Get_AllIngredients
+AS
+	select IngredientsId, Name, Price  from tblIngredients
+GO
+
